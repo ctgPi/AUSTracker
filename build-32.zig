@@ -3,7 +3,7 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{
         .default_target = .{
-            .cpu_arch = .x86_64,
+            .cpu_arch = .x86,
             .os_tag = .windows,
             .abi = .msvc,
         },
@@ -13,7 +13,7 @@ pub fn build(b: *std.Build) void {
     const SDL2_version = "2.28.0";
     const SDL2_ttf_version = "2.20.2";
     const SDL2_image_version = "2.6.3";
-    const platform_dir = "/x64";
+    const platform_dir = "/x86";
 
     const exe = b.addExecutable(.{
         .name = "AUSTracker",
@@ -38,9 +38,9 @@ pub fn build(b: *std.Build) void {
     b.installBinFile("SDL2_image-" ++ SDL2_image_version ++ "/lib" ++ platform_dir ++ "/SDL2_image.dll", "SDL2_image.dll");
     exe.linkSystemLibrary("SDL2_image");
 
-    //    exe.linkSystemLibrary("gdi32");
-    //    exe.linkSystemLibrary("rpcrt4");
-    //    exe.linkSystemLibrary("usp10");
+    exe.linkSystemLibrary("gdi32");
+    exe.linkSystemLibrary("rpcrt4");
+    exe.linkSystemLibrary("usp10");
 
     exe.linkLibC();
     b.installArtifact(exe);

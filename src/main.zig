@@ -1,9 +1,9 @@
 const std = @import("std");
 const assert = std.debug.assert;
 const c = @cImport({
-    @cInclude("SDL2/SDL.h");
-    @cInclude("SDL2/SDL_image.h");
-    @cInclude("SDL2/SDL_ttf.h");
+    @cInclude("SDL.h");
+    @cInclude("SDL_image.h");
+    @cInclude("SDL_ttf.h");
 });
 const Color = c.SDL_Color;
 const Position = struct {
@@ -36,7 +36,7 @@ const RenderContext = struct {
     },
 
     fn drawText(self: RenderContext, text: []const u8, font: *c.TTF_Font, position: Position, color: Color) void {
-        var buffer: [64]u8 = [_]u8 { 0 } ** 64;
+        var buffer: [64]u8 = [_]u8{0} ** 64;
         @memcpy(buffer[0..text.len], text);
 
         const surface = c.TTF_RenderUTF8_Blended(font, &buffer, color);
@@ -52,9 +52,7 @@ const RenderContext = struct {
         });
 
         const y: c_int = @intCast(c_int, switch (position.anchor) {
-            .BASELINE_LEFT,
-            .BASELINE_CENTER,
-            .BASELINE_RIGHT => position.y - @intCast(i32, c.TTF_FontAscent(font)),
+            .BASELINE_LEFT, .BASELINE_CENTER, .BASELINE_RIGHT => position.y - @intCast(i32, c.TTF_FontAscent(font)),
         });
 
         const target_rect = c.SDL_Rect{ .x = x + 8, .y = y + 8, .w = surface.*.w, .h = surface.*.h };
@@ -74,12 +72,12 @@ const RenderContext = struct {
 
         self.drawText("♥", self.font.noto_emoji, .{ .x = 36, .y = 48, .anchor = .BASELINE_CENTER }, .{ .r = 0xff, .g = 0x00, .b = 0x00, .a = 0xff });
         {
-            const text = try std.fmt.bufPrint(&buffer, "{d}", .{ state.constitution.health });
+            const text = try std.fmt.bufPrint(&buffer, "{d}", .{state.constitution.health});
             self.drawText(text, self.font.fira_sans, .{ .x = 156, .y = 48, .anchor = .BASELINE_RIGHT }, .{ .r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff });
         }
         self.drawText("🛡️", self.font.noto_emoji, .{ .x = 216, .y = 48, .anchor = .BASELINE_CENTER }, .{ .r = 0x80, .g = 0x80, .b = 0xff, .a = 0xff });
         {
-            const text = try std.fmt.bufPrint(&buffer, "{d}", .{ state.constitution.shield });
+            const text = try std.fmt.bufPrint(&buffer, "{d}", .{state.constitution.shield});
             self.drawText(text, self.font.fira_sans, .{ .x = 300, .y = 48, .anchor = .BASELINE_RIGHT }, .{ .r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff });
         }
         self.drawText("↷", self.font.dejavu_sans, .{ .x = 360, .y = 48, .anchor = .BASELINE_CENTER }, .{ .r = 0x80, .g = 0x80, .b = 0xff, .a = 0xff });
@@ -100,19 +98,19 @@ const RenderContext = struct {
 
         self.drawText("⬤", self.font.dejavu_sans, .{ .x = 36, .y = 96, .anchor = .BASELINE_CENTER }, .{ .r = 0xff, .g = 0xcc, .b = 0x00, .a = 0xff });
         {
-            const text = try std.fmt.bufPrint(&buffer, "{d}", .{ state.total.gold_orbs });
+            const text = try std.fmt.bufPrint(&buffer, "{d}", .{state.total.gold_orbs});
             self.drawText(text, self.font.fira_sans, .{ .x = 108, .y = 96, .anchor = .BASELINE_RIGHT }, .{ .r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff });
         }
 
         self.drawText("🌸", self.font.noto_emoji, .{ .x = 180, .y = 96, .anchor = .BASELINE_CENTER }, .{ .r = 0x66, .g = 0x66, .b = 0xff, .a = 0xff });
         {
-            const text = try std.fmt.bufPrint(&buffer, "{d}", .{ state.total.flowers });
+            const text = try std.fmt.bufPrint(&buffer, "{d}", .{state.total.flowers});
             self.drawText(text, self.font.fira_sans, .{ .x = 264, .y = 96, .anchor = .BASELINE_RIGHT }, .{ .r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff });
         }
 
         self.drawText("💰", self.font.noto_emoji, .{ .x = 336, .y = 96, .anchor = .BASELINE_CENTER }, .{ .r = 0x00, .g = 0xff, .b = 0x00, .a = 0xff });
         {
-            const text = try std.fmt.bufPrint(&buffer, "{d}", .{ state.money });
+            const text = try std.fmt.bufPrint(&buffer, "{d}", .{state.money});
             self.drawText(text, self.font.fira_sans, .{ .x = 456, .y = 96, .anchor = .BASELINE_RIGHT }, .{ .r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff });
         }
 
@@ -122,7 +120,7 @@ const RenderContext = struct {
         // slide: ↔
         // dive: ↯
 
-        if (true) {  // draw bosses
+        if (true) { // draw bosses
             for (0..17) |i| {
                 const boss_rectangle = c.SDL_Rect{ .x = 32 + @intCast(c_int, 34 * i), .y = 120, .w = 32, .h = 32 };
                 _ = c.SDL_SetRenderDrawColor(self.renderer, 0xff, 0xff, 0xff, 0xff);
@@ -140,16 +138,16 @@ const RenderContext = struct {
             }
         }
 
-        if (true) {  // draw map
+        if (true) { // draw map
             if (false) {
                 const map_rectangle = c.SDL_Rect{ .x = 8, .y = 163, .w = 369, .h = 309 };
                 _ = c.SDL_SetRenderDrawColor(self.renderer, 0x00, 0xff, 0x00, 0xff);
                 _ = c.SDL_RenderFillRect(self.renderer, &map_rectangle);
             }
             for (0..30) |i| {
-                for (0..25) |j| { 
+                for (0..25) |j| {
                     const cell = state.map[i][j];
-                    const x =  12 + i * 12;
+                    const x = 12 + i * 12;
                     const y = 167 + j * 12;
                     const cell_rectangle = c.SDL_Rect{ .x = @intCast(c_int, x + 1), .y = @intCast(c_int, y + 1), .w = 11, .h = 11 };
                     _ = c.SDL_SetRenderDrawColor(self.renderer, cell.color.r, cell.color.g, cell.color.b, 0xff);
@@ -177,7 +175,7 @@ const boss_icon_data: [17][]const u8 = blk: {
     var data: [17][]const u8 = undefined;
     var buffer: [64]u8 = undefined;
     inline for (0..17) |i| {
-        const text = std.fmt.bufPrint(&buffer, "images/boss/{d}.png", .{ i }) catch unreachable;
+        const text = std.fmt.bufPrint(&buffer, "images/boss/{d}.png", .{i}) catch unreachable;
         data[i] = @embedFile(text)[0..];
     }
     break :blk data;
@@ -188,7 +186,7 @@ fn loadFont(data: []const u8, font_size: u32) !*c.TTF_Font {
     const font_rw = c.SDL_RWFromConstMem(data.ptr, @intCast(c_int, data.len));
     const font = c.TTF_OpenFontRW(font_rw, 1, @intCast(c_int, font_size)) orelse unreachable;
     c.TTF_SetFontHinting(font, c.TTF_HINTING_LIGHT);
-    c.TTF_SetFontKerning(font, 1);
+    c.TTF_SetFontKerning(font, 0);
 
     return font;
 }
@@ -198,6 +196,37 @@ fn loadTexture(renderer: *c.SDL_Renderer, data: []const u8) !*c.SDL_Texture {
     const texture = c.IMG_LoadTexture_RW(renderer, texture_rw, 1) orelse unreachable;
     return texture;
 }
+
+pub export fn wWinMain(hInstance: std.os.windows.HINSTANCE, hPrevInstance: std.os.windows.HINSTANCE, szCmdLine: ?[*:0]u8, iCmdShow: c_int) callconv(std.os.windows.WINAPI) c_int {
+    _ = hInstance;
+    _ = hPrevInstance;
+    _ = szCmdLine;
+    _ = iCmdShow;
+
+    if (main()) {
+        return 0;
+    } else |_| {
+        return 1;
+    }
+}
+
+pub export fn WinMain(hInstance: std.os.windows.HINSTANCE, hPrevInstance: std.os.windows.HINSTANCE, szCmdLine: ?[*:0]u8, iCmdShow: c_int) callconv(std.os.windows.WINAPI) c_int {
+    _ = hInstance;
+    _ = hPrevInstance;
+    _ = szCmdLine;
+    _ = iCmdShow;
+
+    if (main()) {
+        return 0;
+    } else |_| {
+        return 1;
+    }
+}
+
+//fn chkstk_ms() callconv(.C) void {}
+//comptime {
+//    @export(chkstk_ms, .{ .name = "___chkstk_ms" });
+//}
 
 pub fn main() !void {
     _ = c.SDL_Init(c.SDL_INIT_VIDEO);
@@ -222,7 +251,7 @@ pub fn main() !void {
 
     var renderer = c.SDL_CreateRenderer(window, 0, c.SDL_RENDERER_PRESENTVSYNC) orelse unreachable;
     defer c.SDL_DestroyRenderer(renderer);
-    
+
     const boss_icon = blk: {
         var texture: [17]*c.SDL_Texture = undefined;
         for (0..17) |i| {
@@ -239,7 +268,7 @@ pub fn main() !void {
     const boss_dead = try loadTexture(renderer, boss_dead_data);
     defer c.SDL_DestroyTexture(boss_dead);
 
-    const context = RenderContext {
+    const context = RenderContext{
         .renderer = renderer,
         .texture = .{
             .boss_dead = boss_dead,
@@ -263,7 +292,7 @@ pub fn main() !void {
             }
         }
 
-        if (std.fs.cwd().openFile("UntitledSave1", std.fs.File.OpenFlags {})) |save_file| {
+        if (std.fs.cwd().openFile("UntitledSave1", std.fs.File.OpenFlags{})) |save_file| {
             defer save_file.close();
             if (GameState.load(save_file.reader())) |new_state| {
                 state = new_state;
@@ -274,6 +303,6 @@ pub fn main() !void {
             // TODO: indicate an error
         }
 
-        try context.render(state);
+        context.render(state) catch unreachable;
     }
 }
