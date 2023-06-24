@@ -28,6 +28,13 @@ const RenderContext = struct {
     texture: struct {
         boss_dead: *c.SDL_Texture,
         boss_icon: [17]*c.SDL_Texture,
+        floor_none: *c.SDL_Texture,
+        floor_duck: *c.SDL_Texture,
+        ceiling_none: *c.SDL_Texture,
+        ceiling_stick: *c.SDL_Texture,
+        ceiling_slide: *c.SDL_Texture,
+        bomb_none: *c.SDL_Texture,
+        bomb_dive: *c.SDL_Texture,
     },
     font: struct {
         fira_sans: *c.TTF_Font,
@@ -114,11 +121,7 @@ const RenderContext = struct {
             self.drawText(text, self.font.fira_sans, .{ .x = 456, .y = 96, .anchor = .BASELINE_RIGHT }, .{ .r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff });
         }
 
-        // duck: ⤓
-        // stick: ⤒
-        // long shot: ⇝
-        // slide: ↔
-        // dive: ↯
+        // long shot:
 
         if (true) { // draw bosses
             for (0..17) |i| {
@@ -163,6 +166,68 @@ const RenderContext = struct {
             }
         }
 
+        if (true) {
+            const floor_rectangle = c.SDL_Rect{ .x = 400, .y = 160, .w = 64, .h = 64 };
+            _ = c.SDL_SetRenderDrawColor(self.renderer, 0xff, 0xff, 0xff, 0xff);
+            _ = c.SDL_RenderFillRect(self.renderer, &floor_rectangle);
+
+            if (state.ability[8]) {
+                _ = c.SDL_RenderCopy(self.renderer, self.texture.floor_duck, null, &floor_rectangle);
+            } else {
+                _ = c.SDL_RenderCopy(self.renderer, self.texture.floor_none, null, &floor_rectangle);
+                _ = c.SDL_SetRenderDrawColor(self.renderer, 0x00, 0x00, 0x00, 0x99);
+                _ = c.SDL_RenderFillRect(self.renderer, &floor_rectangle);
+            }
+        }
+
+        if (true) {
+            const ceiling_rectangle = c.SDL_Rect{ .x = 472, .y = 160, .w = 64, .h = 64 };
+            _ = c.SDL_SetRenderDrawColor(self.renderer, 0xff, 0xff, 0xff, 0xff);
+            _ = c.SDL_RenderFillRect(self.renderer, &ceiling_rectangle);
+
+            if (state.ability[10]) {
+                _ = c.SDL_RenderCopy(self.renderer, self.texture.ceiling_slide, null, &ceiling_rectangle);
+            } else if (state.ability[9]) {
+                _ = c.SDL_RenderCopy(self.renderer, self.texture.ceiling_stick, null, &ceiling_rectangle);
+            } else {
+                _ = c.SDL_RenderCopy(self.renderer, self.texture.ceiling_none, null, &ceiling_rectangle);
+                _ = c.SDL_SetRenderDrawColor(self.renderer, 0x00, 0x00, 0x00, 0x99);
+                _ = c.SDL_RenderFillRect(self.renderer, &ceiling_rectangle);
+            }
+        }
+
+        if (true) {
+            const bomb_rectangle = c.SDL_Rect{ .x = 544, .y = 160, .w = 64, .h = 64 };
+            _ = c.SDL_SetRenderDrawColor(self.renderer, 0xff, 0xff, 0xff, 0xff);
+            _ = c.SDL_RenderFillRect(self.renderer, &bomb_rectangle);
+
+            if (state.ability[12]) {
+                _ = c.SDL_RenderCopy(self.renderer, self.texture.bomb_dive, null, &bomb_rectangle);
+            } else {
+                _ = c.SDL_RenderCopy(self.renderer, self.texture.bomb_none, null, &bomb_rectangle);
+                _ = c.SDL_SetRenderDrawColor(self.renderer, 0x00, 0x00, 0x00, 0x99);
+                _ = c.SDL_RenderFillRect(self.renderer, &bomb_rectangle);
+            }
+        }
+
+        if (true) {
+            if (state.ability[13]) {
+                self.drawText("🔥", self.font.noto_emoji, .{ .x = 430, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0xff, .g = 0x99, .b = 0x00, .a = 0xff });
+            } else {
+                self.drawText("🔥", self.font.noto_emoji, .{ .x = 430, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0x66, .g = 0x66, .b = 0x66, .a = 0xff });
+            }
+            if (state.ability[20]) {
+                self.drawText("🧊", self.font.noto_emoji, .{ .x = 490, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0x33, .g = 0x99, .b = 0xff, .a = 0xff });
+            } else {
+                self.drawText("🧊", self.font.noto_emoji, .{ .x = 490, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0x66, .g = 0x66, .b = 0x66, .a = 0xff });
+            }
+            if (state.ability[15]) {
+                self.drawText("⇝", self.font.dejavu_sans, .{ .x = 550, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0xff, .g = 0xff, .b = 0x66, .a = 0xff });
+            } else {
+                self.drawText("⇝", self.font.dejavu_sans, .{ .x = 550, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0x66, .g = 0x66, .b = 0x66, .a = 0xff });
+            }
+        }
+
         c.SDL_RenderPresent(self.renderer);
     }
 };
@@ -181,6 +246,16 @@ const boss_icon_data: [17][]const u8 = blk: {
     break :blk data;
 };
 const boss_dead_data = @embedFile("images/boss/dead.png")[0..];
+
+const floor_none_data = @embedFile("images/floor/none.png")[0..];
+const floor_duck_data = @embedFile("images/floor/duck.png")[0..];
+
+const ceiling_none_data = @embedFile("images/ceiling/none.png")[0..];
+const ceiling_stick_data = @embedFile("images/ceiling/stick.png")[0..];
+const ceiling_slide_data = @embedFile("images/ceiling/slide.png")[0..];
+
+const bomb_none_data = @embedFile("images/bomb/none.png")[0..];
+const bomb_dive_data = @embedFile("images/bomb/dive.png")[0..];
 
 fn loadFont(data: []const u8, font_size: u32) !*c.TTF_Font {
     const font_rw = c.SDL_RWFromConstMem(data.ptr, @intCast(c_int, data.len));
@@ -268,11 +343,39 @@ pub fn main() !void {
     const boss_dead = try loadTexture(renderer, boss_dead_data);
     defer c.SDL_DestroyTexture(boss_dead);
 
+    const floor_none = try loadTexture(renderer, floor_none_data);
+    defer c.SDL_DestroyTexture(floor_none);
+
+    const floor_duck = try loadTexture(renderer, floor_duck_data);
+    defer c.SDL_DestroyTexture(floor_duck);
+
+    const ceiling_none = try loadTexture(renderer, ceiling_none_data);
+    defer c.SDL_DestroyTexture(ceiling_none);
+
+    const ceiling_stick = try loadTexture(renderer, ceiling_stick_data);
+    defer c.SDL_DestroyTexture(ceiling_stick);
+
+    const ceiling_slide = try loadTexture(renderer, ceiling_slide_data);
+    defer c.SDL_DestroyTexture(ceiling_slide);
+
+    const bomb_none = try loadTexture(renderer, bomb_none_data);
+    defer c.SDL_DestroyTexture(bomb_none);
+
+    const bomb_dive = try loadTexture(renderer, bomb_dive_data);
+    defer c.SDL_DestroyTexture(bomb_dive);
+
     const context = RenderContext{
         .renderer = renderer,
         .texture = .{
             .boss_dead = boss_dead,
             .boss_icon = boss_icon,
+            .floor_none = floor_none,
+            .floor_duck = floor_duck,
+            .ceiling_none = ceiling_none,
+            .ceiling_stick = ceiling_stick,
+            .ceiling_slide = ceiling_slide,
+            .bomb_none = bomb_none,
+            .bomb_dive = bomb_dive,
         },
         .font = .{
             .fira_sans = fira_sans,

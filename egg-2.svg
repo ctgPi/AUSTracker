@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666665 8.4666669"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="egg-2.svg"
+   inkscape:export-filename="/home/fabio/Projects/AUSTracker/none.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="false"
+     inkscape:document-units="mm"
+     showgrid="true"
+     units="px"
+     width="32px"
+     inkscape:lockguides="false"
+     objecttolerance="21.3"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="-80.079843"
+     inkscape:cy="-14.407301"
+     inkscape:window-width="3766"
+     inkscape:window-height="2489"
+     inkscape:window-x="74"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1209"
+       empspacing="8"
+       color="#ff0000"
+       opacity="0.4"
+       empcolor="#ff0000"
+       empopacity="0.6"
+       enabled="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path31"
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.0270835,5.334959 c 0,0.3090829 -0.15875,0.6181659 -0.3175001,0.6181659 h -0.9525 c -0.15875,0 -0.3175,-0.309083 -0.3175,-0.6181659 0,-0.6181662 0.3175001,-1.2314885 0.7951403,-1.2339174 0.4748597,-0.00242 0.7923598,0.6157512 0.7923598,1.2339174 z"
+       sodipodi:nodetypes="sscsss" />
+    <rect
+       style="fill:#000000;stroke-width:0.293248"
+       id="rect1047"
+       width="7.4083333"
+       height="0.92604166"
+       x="0.5291667"
+       y="6.3499999" />
+    <path
+       id="rect2013-3-7"
+       style="fill:#cccccc;stroke-width:0.264583"
+       d="m 3.9687501,1.1906249 h 0.5291667 v 1.5875 H 5.0270834 L 4.2333333,3.8364582 3.4395833,2.7781249 H 3.96875 Z"
+       sodipodi:nodetypes="cccccccc" />
+  </g>
+</svg>
