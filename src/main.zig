@@ -187,9 +187,9 @@ const RenderContext = struct {
             _ = c.SDL_SetRenderDrawColor(self.renderer, 0xff, 0xff, 0xff, 0xff);
             _ = c.SDL_RenderFillRect(self.renderer, &ceiling_rectangle);
 
-            if (state.ability[10]) {
+            if (state.ability[9] and state.ability[10]) {
                 _ = c.SDL_RenderCopy(self.renderer, self.texture.ceiling_slide, null, &ceiling_rectangle);
-            } else if (state.ability[9]) {
+            } else if (state.ability[9] or state.ability[10]) {
                 _ = c.SDL_RenderCopy(self.renderer, self.texture.ceiling_stick, null, &ceiling_rectangle);
             } else {
                 _ = c.SDL_RenderCopy(self.renderer, self.texture.ceiling_none, null, &ceiling_rectangle);
@@ -213,7 +213,7 @@ const RenderContext = struct {
         }
 
         if (true) {
-            if (state.ability[13]) {
+            if (state.ability[13] or state.ability[14]) {
                 self.drawText("🔥", self.font.noto_emoji, .{ .x = 430, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0xff, .g = 0x99, .b = 0x00, .a = 0xff });
             } else {
                 self.drawText("🔥", self.font.noto_emoji, .{ .x = 430, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0x66, .g = 0x66, .b = 0x66, .a = 0xff });
@@ -223,7 +223,7 @@ const RenderContext = struct {
             } else {
                 self.drawText("🧊", self.font.noto_emoji, .{ .x = 490, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0x66, .g = 0x66, .b = 0x66, .a = 0xff });
             }
-            if (state.ability[15]) {
+            if (state.ability[13] and state.ability[14]) {
                 self.drawText("⇝", self.font.dejavu_sans, .{ .x = 550, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0xff, .g = 0xff, .b = 0x66, .a = 0xff });
             } else {
                 self.drawText("⇝", self.font.dejavu_sans, .{ .x = 550, .y = 256, .anchor = .BASELINE_CENTER }, .{ .r = 0x66, .g = 0x66, .b = 0x66, .a = 0xff });
